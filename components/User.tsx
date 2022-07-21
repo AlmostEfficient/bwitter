@@ -54,7 +54,7 @@ const User: FC<UserProps> = (props) => {
         try {
             const stateAccount = await getStateAccount(new PublicKey(props.id), program);
             // We iterate backwards, because the newest tweets are on the top
-            for (let i = stateAccount.tweetCount.toNumber() - 1; i >= 0; i--) {
+            for (let i = (stateAccount.tweetCount as any).toNumber() - 1; i >= 0; i--) {
                 const tweetAccount = await getTweetAccount(userKey, program, i);
 
                 arr.push({
@@ -97,9 +97,9 @@ const User: FC<UserProps> = (props) => {
         try {
             const stateAccount = await getStateAccount(anchorWallet.publicKey, program);
             if (stateAccount.followAccount) {
-                for (let i = 0; i < stateAccount.followAccount.toNumber(); i++) {
+                for (let i = 0; i < (stateAccount.followAccount as any).toNumber(); i++) {
                     const followAccount = await getFollowAccount(anchorWallet.publicKey, program, i);
-                    if (followAccount.follow.toBase58() === props.id) {
+                    if ((followAccount.follow as any).toBase58() === props.id) {
                         return true;
                     }
                 }

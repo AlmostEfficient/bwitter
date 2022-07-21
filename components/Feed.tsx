@@ -14,13 +14,7 @@ interface FeedProps {}
 const Feed: FC<FeedProps> = (props) => {
     const anchorWallet = useAnchorWallet();
     const [input, setInput] = useState(""); // '' is the initial state value
-    const [tweetList, setTweetList] = useState<TweetProps[]>([
-        { tweet: "TEST", authorName: "TEST", authorKey: "TEST", timestamp: 1111 },
-        { tweet: "TEST1", authorName: "TEST1", authorKey: "TEST1", timestamp: 1111 },
-        { tweet: "TEST2", authorName: "TEST2", authorKey: "TEST2", timestamp: 1111 },
-        { tweet: "TEST3", authorName: "TEST3", authorKey: "TEST3", timestamp: 1111 },
-        { tweet: "TEST4", authorName: "TEST4", authorKey: "TEST4", timestamp: 1111 },
-    ]); // TODO: how do we call initial construction data or we wait?
+    const [tweetList, setTweetList] = useState<TweetProps[]>([]); // TODO: how do we call initial construction data or we wait?
 
     useEffect(() => {
         if (anchorWallet) {
@@ -41,7 +35,7 @@ const Feed: FC<FeedProps> = (props) => {
             // Get list of all people we are following
             const stateAccount = await getStateAccount(anchorWallet.publicKey, program);
             const followAccounts = [];
-            for (let i = 0; i < stateAccount.followCount.toNumber(); i++) {
+            for (let i = 0; i < (stateAccount.followCount as any).toNumber(); i++) {
                 const followPDA = await getFollowPDA(anchorWallet.publicKey, program, i);
                 followAccounts.push(followPDA);
             }
@@ -56,7 +50,7 @@ const Feed: FC<FeedProps> = (props) => {
             // get tweets from people we are following
             for (let followInfo of followInfos) {
                 if (!followInfo) continue;
-                await buildTweetList(program, followInfo.follow, tweetAccounts);
+                await buildTweetList(program, (followInfo as any).follow, tweetAccounts);
             }
             tweetAccounts = tweetAccounts.sort((a, b) => b.timestamp - a.timestamp);
             setTweetList(tweetAccounts);
@@ -70,7 +64,7 @@ const Feed: FC<FeedProps> = (props) => {
         try {
             const stateAccount = await getStateAccount(publicKey, program);
             // TODO change to tweetCount
-            for (let i = 0; i < stateAccount.tweetCount.toNumber(); i++) {
+            for (let i = 0; i < (stateAccount.tweetCount as any).toNumber(); i++) {
                 try {
                     const tweetAccount = await getTweetAccount(publicKey, program, i);
 
@@ -98,7 +92,7 @@ const Feed: FC<FeedProps> = (props) => {
         try {
             const statePDA = await getStatePDA(anchorWallet.publicKey, program);
             const stateAccount = await getStateAccount(anchorWallet.publicKey, program);
-            const tweetPDA = await getTweetPDA(anchorWallet.publicKey, program, stateAccount.tweetCount);
+            const tweetPDA = await getTweetPDA(anchorWallet.publicKey, program, stateAccount.tweetCount as any);
             let text = input;
 
             await program.methods
