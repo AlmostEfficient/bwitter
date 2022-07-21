@@ -34,6 +34,7 @@ const Main: FC = () => {
         } catch (err) {
             console.log(err);
         }
+
         // since we errored out, we don't have an account
         setHasAccount(false);
     }

@@ -3,7 +3,7 @@ import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { web3 } from "@project-serum/anchor";
 import { PublicKey } from "@solana/web3.js";
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, SetStateAction } from "react";
 
 import styles from "../styles/User.module.css";
 import { getFollowAccount, getFollowPDA, getHasAccount, getProgram, getStateAccount, getStatePDA, getTweetAccount } from "./util";
@@ -43,7 +43,7 @@ const User: FC<UserProps> = (props) => {
         setIsFollow(await isFollowing());
         setHasAccount(await getHasAccount(anchorWallet));
         setTweetList(await getAllPost());
-        setUsername(await getUsername());
+        setUsername((await getUsername()) as SetStateAction<string>);
     }
 
     async function getAllPost() {
@@ -52,6 +52,7 @@ const User: FC<UserProps> = (props) => {
         }
 
         const program = getProgram(anchorWallet);
+        console.log(props.id);
         const userKey = new PublicKey(props.id);
         const arr: TweetProps[] = [];
         try {
@@ -59,11 +60,12 @@ const User: FC<UserProps> = (props) => {
             // We iterate backwards, because the newest tweets are on the top
             for (let i = stateAccount.tweetCount.toNumber() - 1; i >= 0; i--) {
                 const tweetAccount = await getTweetAccount(userKey, program, i);
+
                 arr.push({
-                    tweet: tweetAccount.text,
-                    authorName: stateAccount.username,
+                    tweet: tweetAccount.text as string,
+                    authorName: stateAccount.username as string,
                     authorKey: props.id,
-                    timestamp: tweetAccount.timestamp,
+                    timestamp: tweetAccount.timestamp as number,
                 });
             }
         } catch (err) {
@@ -109,6 +111,7 @@ const User: FC<UserProps> = (props) => {
         } catch (err) {
             console.log("Transaction error: ", err);
         }
+
         return false;
     }
 
@@ -121,7 +124,7 @@ const User: FC<UserProps> = (props) => {
         try {
             const statePDA = await getStatePDA(anchorWallet.publicKey, program); //program.account.stateAccount.fetch(stateSigner);
             const stateAccount = await getStateAccount(anchorWallet.publicKey, program);
-            const followPDA = await getFollowPDA(anchorWallet.publicKey, program, stateAccount.followCount);
+            const followPDA = await getFollowPDA(anchorWallet.publicKey, program, stateAccount.followCount as number);
 
             let followKey = new PublicKey(props.id);
             await program.methods
@@ -140,7 +143,12 @@ const User: FC<UserProps> = (props) => {
         }
     }
 
-    const tweetElements = tweetList.map((tweet) => <Tweet key={tweet.tweet} {...tweet} />);
+    const tweetElements =
+        tweetList.length > 0 ? (
+            tweetList.map((tweet) => <Tweet key={tweet.tweet} {...tweet} />)
+        ) : (
+            <p>There's currently no bweet from this user</p>
+        );
     // Only show the follow button if we have an account and we're not viewing our own account
     const showFollowButton = props.id !== anchorWallet?.publicKey.toBase58() || !hasAccount;
 
