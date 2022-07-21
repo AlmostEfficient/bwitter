@@ -1,164 +1,164 @@
 {
-  "version": "0.1.0",
-  "name": "twitter",
-  "instructions": [
-    {
-      "name": "createState",
-      "accounts": [
+    "version": "0.1.0",
+    "name": "twitter",
+    "instructions": [
         {
-          "name": "state",
-          "isMut": true,
-          "isSigner": false
+            "name": "createState",
+            "accounts": [
+                {
+                    "name": "state",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "authority",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "username",
+                    "type": "string"
+                }
+            ]
         },
         {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
+            "name": "createTweet",
+            "accounts": [
+                {
+                    "name": "state",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "tweet",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "authority",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "clock",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "text",
+                    "type": "string"
+                }
+            ]
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+            "name": "createFollow",
+            "accounts": [
+                {
+                    "name": "state",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "follow",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "authority",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "followKey",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
         }
-      ],
-      "args": [
+    ],
+    "accounts": [
         {
-          "name": "username",
-          "type": "string"
+            "name": "StateAccount",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "authority",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "tweetCount",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "followCount",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "username",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "TweetAccount",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "authority",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "text",
+                        "type": "string"
+                    },
+                    {
+                        "name": "timestamp",
+                        "type": "i64"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "FollowAccount",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "authority",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "follow",
+                        "type": "publicKey"
+                    }
+                ]
+            }
         }
-      ]
-    },
-    {
-      "name": "createTweet",
-      "accounts": [
-        {
-          "name": "state",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tweet",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "clock",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "text",
-          "type": "string"
-        }
-      ]
-    },
-    {
-      "name": "createFollow",
-      "accounts": [
-        {
-          "name": "state",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "follow",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "followKey",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
+    ],
+    "metadata": {
+        "address": "GE7YQ6cSXiFmu5XeCykLjy36xfVNhns6s5j4nmv97vC7"
     }
-  ],
-  "accounts": [
-    {
-      "name": "StateAccount",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "tweetCount",
-            "type": "u64"
-          },
-          {
-            "name": "followCount",
-            "type": "u64"
-          },
-          {
-            "name": "username",
-            "type": "string"
-          }
-        ]
-      }
-    },
-    {
-      "name": "TweetAccount",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "text",
-            "type": "string"
-          },
-          {
-            "name": "timestamp",
-            "type": "i64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "FollowAccount",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "follow",
-            "type": "publicKey"
-          }
-        ]
-      }
-    }
-  ],
-  "metadata": {
-    "address": "GE7YQ6cSXiFmu5XeCykLjy36xfVNhns6s5j4nmv97vC7"
-  }
 }

@@ -1,11 +1,41 @@
 .twitterContainer {
-  margin-left: auto;
-  margin-right: auto;
-  width: 600px;
-  display: block !important;
+    background: #111;
+    display: flex;
+    flex-direction: row;
+    color: white;
 }
-.tweetInput {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 540px;
+
+.logoContainer {
+    min-height: 100vh;
+    width: 55vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background: -webkit-linear-gradient(135deg, #60c657, #35aee2);
+}
+
+.buildspace_logo {
+    width: 250px;
+}
+
+.site_header {
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    padding: 20px 0;
+}
+
+.registerContainer {
+    padding: 20px;
+    padding-left: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.connect_text {
+    padding: 15px 0;
 }

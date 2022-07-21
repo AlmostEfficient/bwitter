@@ -1,0 +1,17 @@
+.twitterContainer {
+    margin-left: auto;
+    margin-right: auto;
+    display: block !important;
+    background: red;
+    min-height: 100vh;
+}
+
+.tweetInput {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 540px;
+}
+
+.logoContainer {
+    min-height: 100vh;
+}
