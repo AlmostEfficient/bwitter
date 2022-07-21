@@ -43,21 +43,25 @@ const Main: FC = () => {
         setHasAccount(true);
     }
 
-    return (
-        <div className={styles.twitterContainer}>
-            <div className={`${styles.logoContainer}`}>
-                <img src="buildspace.png" className={styles.buildspace_logo} />
-            </div>
+    const RenderNoAuthPage = () => {
+        return (
+            <div className={styles.twitterContainer}>
+                <div className={`${styles.logoContainer}`}>
+                    <img src="buildspace.png" className={styles.buildspace_logo} />
+                </div>
 
-            <div className={styles.registerContainer}>
-                <h1 className={styles.site_header}>Join Bwitter today!</h1>
-                <WalletMultiButton className="button-glow" />
-                <div className={styles.connect_text}>
-                    {connected ? hasAccount ? <Feed /> : <SignUp onSubmit={submitSuccessful} /> : "Please connect your wallet"}
+                <div className={styles.registerContainer}>
+                    <h1 className={styles.site_header}>Join Bwitter today!</h1>
+                    <WalletMultiButton className="button-glow" />
+                    <div className={styles.connect_text}>
+                        {connected ? !hasAccount && <SignUp onSubmit={submitSuccessful} /> : "Please connect your wallet"}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    };
+
+    return <div>{connected && !hasAccount ? <Feed /> : <RenderNoAuthPage />}</div>;
 };
 
 export default Main;

@@ -17,11 +17,7 @@ interface UserProps {
 
 const User: FC<UserProps> = (props) => {
     const anchorWallet = useAnchorWallet();
-    const [tweetList, setTweetList] = useState<TweetProps[]>([
-        { tweet: "TEST", authorName: "TEST", authorKey: "TEST", timestamp: 1658414020285 },
-        { tweet: "TEST1", authorName: "TEST", authorKey: "TEST", timestamp: 1658414020285 },
-        { tweet: "TEST2", authorName: "TEST", authorKey: "TEST", timestamp: 1658414020285 },
-    ]);
+    const [tweetList, setTweetList] = useState<TweetProps[]>([]);
     const [isFollow, setIsFollow] = useState(false);
     const [hasAccount, setHasAccount] = useState(false);
     const [username, setUsername] = useState("");
