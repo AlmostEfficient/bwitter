@@ -1,0 +1,11 @@
+.twitterContainer {
+  margin-left: auto;
+  margin-right: auto;
+  width: 600px;
+  display: block !important;
+}
+.tweetInput {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 540px;
+}
