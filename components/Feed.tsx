@@ -130,7 +130,9 @@ const Feed: FC<FeedProps> = (props) => {
                 </button>
             </div>
 
-            <div className={styles.tweetContainer}>{tweetList.length === 0 ? "No tweets" : tweetElements}</div>
+            <div className={styles.tweetContainer}>
+                {tweetList.length === 0 ? <p className={styles.no_tweets}>No tweets</p> : tweetElements}
+            </div>
         </div>
     );
 };

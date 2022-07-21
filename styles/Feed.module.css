@@ -28,3 +28,8 @@
 .input_container {
     margin: 20px 0;
 }
+
+.no_tweets {
+    display: flex;
+    justify-content: center;
+}
