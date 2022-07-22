@@ -61,7 +61,7 @@ const Main: FC = () => {
         );
     };
 
-    return <div>{connected && !hasAccount ? <Feed /> : <RenderNoAuthPage />}</div>;
+    return <div>{connected && hasAccount ? <Feed /> : <RenderNoAuthPage />}</div>;
 };
 
 export default Main;
